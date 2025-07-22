@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Установка n8n
-RUN npm install -g n8n
+RUN npm install -g n8n@1.83.2
 
 # Создание рабочей директории
 ENV N8N_USER_FOLDER="/home/node/.n8n"
