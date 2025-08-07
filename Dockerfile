@@ -1,4 +1,4 @@
-FROM node:18-bullseye-slim
+FROM node:20-bullseye-slim
 
 # Установка зависимостей
 RUN apt-get update && apt-get install -y \
