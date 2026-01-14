@@ -15,20 +15,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
+    jq \
     ffmpeg \
     imagemagick \
     ghostscript \
     poppler-utils \
-    libreoffice \
-    tesseract-ocr \
-    tesseract-ocr-eng \
-    tesseract-ocr-rus \
-    jq \
-    sqlite3 \
     sox \
-    git \
-    python3 \
-    python3-pip \
   && rm -rf /var/lib/apt/lists/*
 
 # 3) Разрешаем ImageMagick читать/писать PDF (иначе часто ловят "not authorized `PDF`")
@@ -42,7 +34,7 @@ RUN set -eux; \
   fi
 
 # 4) Установка n8n (оставлено без изменений по версии)
-RUN npm install -g n8n@1.107.4
+RUN npm install -g n8n@1.123.11
 
 # 5) Рабочая директория и права
 RUN mkdir -p ${N8N_USER_FOLDER} && chown -R node:node ${N8N_USER_FOLDER}
