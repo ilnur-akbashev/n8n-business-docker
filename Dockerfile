@@ -1,8 +1,8 @@
-FROM n8nio/n8n:1.123.18
+FROM node:20-bullseye-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     NODE_ENV=production \
-    N8N_USER_FOLDER=/home/node/.n8n
+    N8N_USER_FOLDER="/home/node/.n8n"
 
 USER root
 
@@ -22,14 +22,16 @@ RUN python3 -m pip install --no-cache-dir --upgrade \
     certifi==2024.12.14 \
     yt-dlp==2024.12.23
 
+RUN npm install -g n8n@1.123.18
+
 RUN mkdir -p ${N8N_USER_FOLDER} && chown -R node:node ${N8N_USER_FOLDER}
+
+USER node
+WORKDIR ${N8N_USER_FOLDER}
 
 RUN yt-dlp --version \
  && ffmpeg -version \
  && n8n --version
-
-USER node
-WORKDIR ${N8N_USER_FOLDER}
 
 EXPOSE 5678
 CMD ["n8n"]
