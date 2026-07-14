@@ -44,8 +44,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN python3 -m pip install --no-cache-dir --upgrade pip==24.3.1 \
     && python3 -m pip install --no-cache-dir \
-        certifi==2024.12.14 \
-        yt-dlp==2024.12.23
+        certifi==2026.6.17
+
+ARG YTDLP_VERSION=2026.06.09
+ARG YTDLP_SHA256=bf8aac79b72287a6d2043074415132558b43743a8f9461a22b0141e90f16ce66
+
+RUN curl -fsSL \
+        "https://github.com/yt-dlp/yt-dlp/releases/download/${YTDLP_VERSION}/yt-dlp_linux" \
+        -o /usr/local/bin/yt-dlp \
+    && echo "${YTDLP_SHA256}  /usr/local/bin/yt-dlp" | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/yt-dlp \
+    && /usr/local/bin/yt-dlp --version
 
 # n8n отдельно, затем puppeteer-core в тот же глобальный node_modules
 RUN npm install -g n8n@1.123.18
